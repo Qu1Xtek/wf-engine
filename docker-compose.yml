@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  workflowconfigurator:
+    image: ${DOCKER_REGISTRY-}workflowconfigurator
+    build:
+      context: .
+      dockerfile: Dockerfile

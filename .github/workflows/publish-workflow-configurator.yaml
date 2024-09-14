@@ -1,0 +1,79 @@
+name: Workflow Configurator
+
+on:
+  push:
+    branches:
+    - main
+    paths-ignore:
+    - 'infrastructure/**'
+    - 'Infra/**'
+    - '**.md'
+
+jobs:
+  docker-build-workflow-configgurator:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - name: Clone the repository
+      uses: actions/checkout@v3
+
+    - name: Set env variables
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.TOKEN_GITHUB}}
+      shell: bash
+      run: |
+        echo "IMAGE_TAG=main-$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
+    # New steps start here
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore "./WorkflowConfigurator.csproj"
+      
+    - name: Build
+      run: dotnet build "WorkflowConfigurator.csproj" --configuration Release
+      
+    - name: Publish
+      run: dotnet publish "WorkflowConfigurator.csproj" --configuration Release --output ./publish
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-region: eu-central-1
+        role-to-assume: ${{secrets.WORKFLOW_CONFIGURATO_DEV_AWS_ECR_ROLE}}
+        role-session-name: WorkflowConfiguratorECRSession
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build and tag docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        target: final
+        push: false
+        load: true
+        tags: |
+          ${{ steps.login-ecr.outputs.registry }}/workflowconfiguratorecrdevstack-workflowconfiguratorecrb5f784e4-pbfmlloibtnq:latest
+          ${{ steps.login-ecr.outputs.registry }}/workflowconfiguratorecrdevstack-workflowconfiguratorecrb5f784e4-pbfmlloibtnq:${{ env.IMAGE_TAG }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Push docker image
+      run: |
+        docker push ${{ steps.login-ecr.outputs.registry }}/workflowconfiguratorecrdevstack-workflowconfiguratorecrb5f784e4-pbfmlloibtnq:${{ env.IMAGE_TAG }}
+        docker push ${{ steps.login-ecr.outputs.registry }}/workflowconfiguratorecrdevstack-workflowconfiguratorecrb5f784e4-pbfmlloibtnq:latest
+
+    - name: Logout of Amazon ECR
+      if: always()
+      run: docker logout ${{ steps.login-ecr.outputs.registry }}

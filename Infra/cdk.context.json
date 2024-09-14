@@ -1,0 +1,115 @@
+{
+  "vpc-provider:account=030464729230:filter.tag:Name=ConnectivityAgentDevStack/ConnectivityAgentVpc:filter.tag:aws:cloudformation:stack-name=ConnectivityAgentDevStack:region=eu-central-1:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-0278b41f145b3b881",
+    "vpcCidrBlock": "10.0.0.0/16",
+    "ownerAccountId": "030464729230",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "Ingress",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-0388dcd36794359a1",
+            "cidr": "10.0.0.0/17",
+            "availabilityZone": "eu-central-1a",
+            "routeTableId": "rtb-0f325ef1f64902d32"
+          },
+          {
+            "subnetId": "subnet-046eb0582174e2bc1",
+            "cidr": "10.0.128.0/17",
+            "availabilityZone": "eu-central-1b",
+            "routeTableId": "rtb-05ffccdadc492de54"
+          }
+        ]
+      }
+    ]
+  },
+  "vpc-provider:account=487727660817:filter.tag:Name=ConnectivityAgentStack/ConnectivityAgentVpc:filter.tag:aws:cloudformation:stack-name=ConnectivityAgentStack:region=eu-central-1:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-0561095ceeeb0c8a6",
+    "vpcCidrBlock": "10.0.0.0/16",
+    "ownerAccountId": "487727660817",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "Ingress",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-0c39c30c8f57c83d8",
+            "cidr": "10.0.0.0/17",
+            "availabilityZone": "eu-central-1a",
+            "routeTableId": "rtb-0014700fd17b435e9"
+          },
+          {
+            "subnetId": "subnet-00d5a98b3e8e98241",
+            "cidr": "10.0.128.0/17",
+            "availabilityZone": "eu-central-1b",
+            "routeTableId": "rtb-049c8943da26bcb56"
+          }
+        ]
+      }
+    ]
+  },
+  "vpc-provider:account=457621392112:filter.tag:Name=ConnectivityAgentProdStack/SharedVpc:filter.tag:aws:cloudformation:stack-name=ConnectivityAgentProdStack:region=eu-central-1:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-0498e47ef73e12f98",
+    "vpcCidrBlock": "10.0.0.0/16",
+    "ownerAccountId": "457621392112",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "Public",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-0d63bd15aeeff9a80",
+            "cidr": "10.0.0.0/19",
+            "availabilityZone": "eu-central-1a",
+            "routeTableId": "rtb-06fc295be68acaa69"
+          },
+          {
+            "subnetId": "subnet-0eeab08e63c59857c",
+            "cidr": "10.0.32.0/19",
+            "availabilityZone": "eu-central-1b",
+            "routeTableId": "rtb-0b2aab6fe135d3031"
+          },
+          {
+            "subnetId": "subnet-04bce93ebf15bb2b3",
+            "cidr": "10.0.64.0/19",
+            "availabilityZone": "eu-central-1c",
+            "routeTableId": "rtb-03b0b461b32f33f28"
+          }
+        ]
+      },
+      {
+        "name": "Private",
+        "type": "Private",
+        "subnets": [
+          {
+            "subnetId": "subnet-0991f5aa310320808",
+            "cidr": "10.0.96.0/19",
+            "availabilityZone": "eu-central-1a",
+            "routeTableId": "rtb-037cd406f8308277d"
+          },
+          {
+            "subnetId": "subnet-0b137c29ed1402dfb",
+            "cidr": "10.0.128.0/19",
+            "availabilityZone": "eu-central-1b",
+            "routeTableId": "rtb-0fee6e9b399629b99"
+          },
+          {
+            "subnetId": "subnet-0c5edd90486de6f62",
+            "cidr": "10.0.160.0/19",
+            "availabilityZone": "eu-central-1c",
+            "routeTableId": "rtb-02784d2e5b9be893d"
+          }
+        ]
+      }
+    ]
+  },
+  "ssm:account=457621392112:parameterName=VPC_INTERFACE_ENDPOINT_SEC_GROUP:region=eu-central-1": "sg-047843d2a59b00c50",
+  "security-group:account=457621392112:region=eu-central-1:securityGroupId=sg-047843d2a59b00c50": {
+    "securityGroupId": "sg-047843d2a59b00c50",
+    "allowAllOutbound": false
+  }
+}
