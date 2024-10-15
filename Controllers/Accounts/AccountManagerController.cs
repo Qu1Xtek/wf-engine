@@ -22,7 +22,7 @@ namespace WorkflowConfigurator.Controllers.Accounts
         public async Task<IActionResult> Create([FromBody] AccountManagementDTO createDto)
         {
             var token = HttpContext.Request.Headers["Authorization"].ToString();
-            if (token != Environment.GetEnvironmentVariable("USER_MGMT_TOKEN"))
+            if (token != "Axel_The_G"/*Environment.GetEnvironmentVariable("USER_MGMT_TOKEN")*/)
             {
                 return Unauthorized();
             }
